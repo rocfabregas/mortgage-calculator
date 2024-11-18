@@ -2,7 +2,7 @@ package com.my_bank.mortgage_calculator.controller;
 
 import com.my_bank.mortgage_calculator.client.InterestRateClient;
 import com.my_bank.mortgage_calculator.entity.InterestRate;
-import java.util.List;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +17,7 @@ public class InterestRateController {
   private final InterestRateClient interestRateClient;
 
   @GetMapping
-  public ResponseEntity<List<InterestRate>> getInterestRates() {
+  public ResponseEntity<Map<Integer, InterestRate>> getInterestRates() {
     return ResponseEntity.ok(interestRateClient.getInterestRates());
   }
-
 }

@@ -8,7 +8,6 @@ import com.my_bank.mortgage_calculator.dto.Currency;
 import com.my_bank.mortgage_calculator.dto.MortgageRequest;
 import com.my_bank.mortgage_calculator.entity.InterestRate;
 import java.math.BigDecimal;
-import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -21,11 +20,10 @@ public class BaseTest {
 
   @BeforeAll
   static void setup() {
-    Optional<InterestRate> rate = Optional.of(
-        InterestRate.builder()
-            .interestRate(BigDecimal.valueOf(3))
-            .maturityPeriod(360)
-            .build());
+    InterestRate rate = InterestRate.builder()
+        .interestRate(BigDecimal.valueOf(3))
+        .maturityPeriod(360)
+        .build();
     mockedStatic = Mockito.mockStatic(InterestRateClient.class);
     mockedStatic.when(() -> InterestRateClient.getInterestRateByMaturityPeriod(anyInt())).thenReturn(rate);
 

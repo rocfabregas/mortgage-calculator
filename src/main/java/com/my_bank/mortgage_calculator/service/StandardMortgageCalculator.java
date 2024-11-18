@@ -7,7 +7,6 @@ import com.my_bank.mortgage_calculator.entity.InterestRate;
 import com.my_bank.mortgage_calculator.exceptions.InvalidMaturityPeriodException;
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -40,14 +39,14 @@ public class StandardMortgageCalculator implements MortgageCalculatorStrategy {
   private BigDecimal calculateMonthlyCost(final MortgageRequest mortgageRequest) {
     BigDecimal loan = mortgageRequest.getLoanValue().getAmount();
     int months = mortgageRequest.getMaturityPeriod();
-    Optional<InterestRate> rate = InterestRateClient.getInterestRateByMaturityPeriod(months);
+    InterestRate rate = InterestRateClient.getInterestRateByMaturityPeriod(months);
 
-    if (rate.isEmpty()) {
+    if (rate == null) {
       log.error("Invalid maturity period: {}", months);
       throw new InvalidMaturityPeriodException(String.valueOf(months));
     }
 
-    BigDecimal monthlyRate = rate.get().getInterestRate().divide(BigDecimal.valueOf(100), MathContext.DECIMAL32)
+    BigDecimal monthlyRate = rate.getInterestRate().divide(BigDecimal.valueOf(100), MathContext.DECIMAL32)
         .divide(BigDecimal.valueOf(12), MathContext.DECIMAL32);
     return loan.multiply(monthlyRate)
         .divide(BigDecimal.ONE.subtract(BigDecimal.ONE
