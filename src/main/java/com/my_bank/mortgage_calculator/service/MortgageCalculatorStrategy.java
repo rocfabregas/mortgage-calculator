@@ -5,6 +5,6 @@ import com.my_bank.mortgage_calculator.dto.MortgageResponse;
 
 public interface MortgageCalculatorStrategy {
 
-  MortgageResponse calculateMortgage(MortgageRequest mortgageRequest);
+  MortgageResponse calculate(final MortgageRequest mortgageRequest);
 
 }

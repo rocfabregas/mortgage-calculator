@@ -1,39 +1,39 @@
 package com.my_bank.mortgage_calculator;
 
+import com.my_bank.mortgage_calculator.dto.MortgageRequest;
 import com.my_bank.mortgage_calculator.dto.MortgageResponse;
 import com.my_bank.mortgage_calculator.service.StandardMortgageCalculator;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 
 @ExtendWith(MockitoExtension.class)
-class StandardMortgageCalculatorTest {
+class StandardMortgageCalculatorTest extends BaseTest {
 
-	@InjectMocks
-	private StandardMortgageCalculator mortgageCalculatorService;
+  @InjectMocks
+  private StandardMortgageCalculator mortgageCalculatorService;
 
-	@Test
-	@Disabled
-	void givenFeasibleMortgage_whenCalculatingMortgage_thenIsFeasible() {
+  @Test
+  void givenFeasibleMortgage_whenCalculatingMortgage_thenIsFeasible() {
 
-		MortgageResponse response = mortgageCalculatorService.calculateMortgage(null);
+    MortgageRequest request = buildMortgageRequest(40_000, 140_000, 175_000);
 
-		Assertions.assertTrue(response.isFeasible());
+    MortgageResponse response = mortgageCalculatorService.calculate(request);
 
-	}
+    Assertions.assertTrue(response.isFeasible());
+  }
 
-	@Test
-	@Disabled
-	void givenUnfeasibleMortgage_whenCalculatingMortgage_thenIsNotFeasible() {
+  @Test
+  void givenUnfeasibleMortgage_whenCalculatingMortgage_thenIsNotFeasible() {
 
-		MortgageResponse response = mortgageCalculatorService.calculateMortgage(null);
+    MortgageRequest request = buildMortgageRequest(20_000, 140_000, 175_000);
 
-		Assertions.assertFalse(response.isFeasible());
+    MortgageResponse response = mortgageCalculatorService.calculate(request);
 
-	}
+    Assertions.assertFalse(response.isFeasible());
+
+  }
 
 }
