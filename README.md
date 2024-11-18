@@ -50,9 +50,10 @@ Request example:
 Description: Returns a list of interest rates.
 Initialization: The interest rates are created in-memory during application startup.
 
-List of possible improvements:
+# List of possible improvements:
 - I would use hexagonal architecture instead of this simple structure
 - Implement more Unit and Integration tests
+- Find other approaches to implement the in-memory interest rates data, such as WireMock
 - Changes when a DB is configured:
   - Properly create the required entities
   - Use mapstruct for mappings between entities and dtos
